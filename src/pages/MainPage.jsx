@@ -3,28 +3,31 @@ import { useState, useEffect } from "react";
 import SearchBox from "../components/SearchBox";
 import AttractionCardSkeleton from "../components/attraction/AttractionCardSkeleton";
 import AttractionCardList from "../container/AttractionsCardList";
-import { debounce, throttle } from "lodash";
+import { throttle } from "lodash";
 import { useSearchParams } from "react-router-dom";
+import useDebounce from "../hooks/useDebounce";
+
+const NUMBER_OF_SKELETON_UI = 5;
 
 const MainPage = () => {
 
   const [keyword, setKeyword] = useState("");
-  const [isEmpty, setIsEmpty] = useState(true);
   const [isScroll, setIsScroll] = useState(false);
   const [attractions, setAttractions] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const [searchParams, setSearchParams] = useSearchParams("");
-
-  const debounceGetAttractions = debounce(keyword => {
-    getAttractions({query: keyword})
-  }, 2000);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const debouncedKeyword = useDebounce(keyword, 500);
 
   const handleKeywordChange = (e) => {
     setKeyword(e.target.value);
-    setSearchParams({query: e.target.value});
-    debounceGetAttractions(e.target.value);
-    // getAttractions({query: e.target.value});
+  };
+
+  const onEnterDown = (e) => {
+    if (e.code === "Enter") {
+      getAttractions({query: e.target.value});
+      setSearchParams({query: e.target.value});
+    }
   };
 
   const getAttractions = async ({
@@ -71,12 +74,9 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
-    if (keyword.length > 0) {
-      setIsEmpty(false);
-    } else {
-      setIsEmpty(true);
-    }
-  }, [keyword]);
+    getAttractions({query: debouncedKeyword});
+    setSearchParams({query: debouncedKeyword});
+  }, [debouncedKeyword])
 
   return(
     <>
@@ -85,18 +85,22 @@ const MainPage = () => {
           keyword={keyword}
           handleChange={handleKeywordChange}
           handleClickX={() => setKeyword("")}
-          isEmpty={isEmpty}
           isScroll={isScroll}
+          onKeyDown={onEnterDown}
         />
       </SearchBoxWrapper>
       {loading && 
-        Array(5).fill(0).map((item, index) => 
+        Array(NUMBER_OF_SKELETON_UI).fill("").map((item, index) => 
           <AttractionCardSkeleton key={index}/>
         )
       }
-      {attractions.length > 0 && <AttractionCardList attractions={attractions} />}
-      {/* <AttractionCardSkeleton />
-      <NoSearchResult /> */}
+      {attractions.length > 0 && 
+        <AttractionCardList 
+          attractions={attractions} 
+          keyword={debouncedKeyword}
+        />
+      }
+      {/* <NoSearchResult /> */}
     </>
   );
 }

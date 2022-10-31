@@ -16,6 +16,7 @@ import { useState, memo } from "react";
  * @param {object} props.reviews
  * @param {object} props.like
  * @param {boolean} props.isLikeable
+ * @param {string} props.keyword
  */
 const AttractionCard = ({
   id,
@@ -25,10 +26,13 @@ const AttractionCard = ({
   reviews,
   like,
   isLikeable = true,
+  keyword
 }) => {
 
   const [isLiked, setIsLiked] = useState(like.isLiked);
   const [likeCount, setLikeCount] = useState(like.count);
+
+  // const coloredName = name keyword
 
   const updateLike = async () => { 
     try {
@@ -91,6 +95,7 @@ AttractionCard.propTypes = {
   reviews: PropTypes.object.isRequired,
   like: PropTypes.object.isRequired,
   isLikeable: PropTypes.bool,
+  keyword: PropTypes.string,
 }
 
 export default memo(AttractionCard);

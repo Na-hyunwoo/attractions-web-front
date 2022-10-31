@@ -8,18 +8,16 @@ import PropTypes from "prop-types";
  * @param {object} props
  * @param {function()} props.handleChange
  * @param {function()} props.handleClickX
- * @param {boolean} props.isEmpty
  * @param {string} props.keyword
  * @param {boolean} props.isScroll
  */
 const SearchBox = ({
   handleChange,
   handleClickX,
-  isEmpty,
   keyword,
-  isScroll
+  isScroll,
+  onKeyDown
 }) => {
-
   return (
     <Wrapper isScroll={isScroll}>
       <InputWrapper>
@@ -30,8 +28,9 @@ const SearchBox = ({
           placeholder="검색" 
           onChange={handleChange}
           value={keyword}
+          onKeyDown={onKeyDown}
         />
-        {!isEmpty && <XButton onClick={handleClickX}/>}
+        {keyword.length > 0 && <XButton onClick={handleClickX}/>}
       </InputWrapper>
     </Wrapper>
   );
@@ -40,7 +39,6 @@ const SearchBox = ({
 SearchBox.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleClickX: PropTypes.func.isRequired,
-  isEmpty: PropTypes.bool.isRequired,
   keyword: PropTypes.string,
   isScroll: PropTypes.bool,
 }

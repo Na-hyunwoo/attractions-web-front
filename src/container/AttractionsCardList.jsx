@@ -5,8 +5,12 @@ import AttractionCard from "../components/attraction/AttractionCard";
  * 
  * @param {object} props
  * @param {array{}} props.attractions
+ * @param {string} props.keyword
  */
-const AttractionCardList = ({attractions}) => {
+const AttractionCardList = ({
+  attractions,
+  keyword
+}) => {
   return (
     <div>
       {attractions.map(attraction => (
@@ -18,6 +22,7 @@ const AttractionCardList = ({attractions}) => {
           coverImgUrl={attraction.coverImageUrl}
           reviews={attraction.reviews}
           like={attraction.like}
+          keyword={keyword}
         />
       ))}
     </div>
@@ -26,6 +31,7 @@ const AttractionCardList = ({attractions}) => {
 
 AttractionCardList.propTypes = {
   attractions: PropTypes.array.isRequired, 
+  keyword: PropTypes.string
 };
 
 export default AttractionCardList;
