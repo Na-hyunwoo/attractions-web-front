@@ -57,10 +57,6 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    fetchAttractions({query: ""});
-  }, []);
-
-  useEffect(() => {
     window.addEventListener(
       'scroll',
       throttle(onScroll, 300),
