@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import AttractionCardSkeleton from "./AttractionCardSkeleton";
 import PropTypes from "prop-types";
 import Like from "../Like";
 import Rating from "../Rating";
 import { typo, INK } from "../../styles";
-import NoSearchResult from "./NoSearchResult";
 import { useState, memo } from "react";
+import HighlightedName from "../HighlightedName";
+import axios from "axios";
 
 /**
  * @param {object} props
@@ -36,9 +36,8 @@ const AttractionCard = ({
 
   const updateLike = async () => { 
     try {
-      const response = await fetch(`/api/attractions/${id}/like`, {
-        method: "PUT",
-      }) 
+      const response = await axios.put(`/api/attractions/${id}/like`);
+  
       if (response.status === 204) {
         setIsLiked(true);
         setLikeCount(prev => prev + 1);
@@ -50,9 +49,8 @@ const AttractionCard = ({
 
   const deleteLike = async () => {
     try {
-      const response = await fetch(`/api/attractions/${id}/like`, {
-        method: "DELETE",
-      })
+      const response = await axios.delete(`/api/attractions/${id}/like`);
+      
       if (response.status === 204) {
         setIsLiked(false);
         setLikeCount(prev => prev - 1);
@@ -66,7 +64,7 @@ const AttractionCard = ({
     <Wrapper>
       <CoverImg src={coverImgUrl} alt={name}/>
       <div>
-        <Name>{name}</Name>
+        <HighlightedName name={name} highlight={keyword}/>
         <Description>{description}</Description>
         <Rating 
           rating={reviews.averageRating}
@@ -117,16 +115,6 @@ const CoverImg = styled.img`
   height: 120px;
 
   margin-right: 16px;
-`;
-
-const Name = styled.p`
-  ${typo({
-    size: "18pt",
-    height: "24pt",
-    weight: 700,
-    color: INK.DARKEST
-  })}
-  margin-bottom: 4px;
 `;
 
 const Description = styled.p`

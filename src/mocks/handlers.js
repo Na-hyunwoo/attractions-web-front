@@ -8,8 +8,6 @@ export const handlers = [
     const query = req.url.searchParams.get("query");
     const likes = JSON.parse(sessionStorage.getItem(LIKES_STORAGE_KEY) || "{}");
 
-    // console.log("req: ", req);
-
     const filteredAttractions = query
       ? filterAttractionsWithQuery(attractions, query)
       : attractions;
