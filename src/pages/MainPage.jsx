@@ -3,9 +3,11 @@ import { useState, useEffect } from "react";
 import SearchBox from "../components/SearchBox";
 import AttractionCardSkeleton from "../components/attraction/AttractionCardSkeleton";
 import AttractionCardList from "../container/AttractionsCardList";
-import { throttle } from "lodash";
+import NoSearchResult from "../components/attraction/NoSearchResult";
+import { debounce, throttle } from "lodash";
 import { useSearchParams } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
+import { getAttractions } from "../services/api/attraction";
 
 const NUMBER_OF_SKELETON_UI = 5;
 
@@ -23,29 +25,27 @@ const MainPage = () => {
     setKeyword(e.target.value);
   };
 
-  const onEnterDown = (e) => {
+  const onEnterDown = debounce((e) => {
     if (e.code === "Enter") {
-      getAttractions({query: e.target.value});
+      fetchAttractions({query: e.target.value});
       setSearchParams({query: e.target.value});
     }
-  };
+  }, 300);
 
-  const getAttractions = async ({
-    query= "",
+  const fetchAttractions = async ({
+    query = "",
   }) => {
     setLoading(true);
 
     try {
-      let url = '/api/attractions';
-      url = query.length > 0 ? (url + '/?query=' + query) : url;
-
-      const response = await fetch(url);
+      const response = await getAttractions({
+        query: query
+      });
 
       if (response.status === 200) {
-        const result = await response.json();
-        setAttractions(result);
-        // console.log("result: ", result);
+        setAttractions(response.data);
       }
+      
     } catch (error) {
       console.log(error);
     } finally {
@@ -62,7 +62,7 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    getAttractions("");
+    fetchAttractions({query: ""});
   }, []);
 
   useEffect(() => {
@@ -71,10 +71,14 @@ const MainPage = () => {
       throttle(onScroll, 300),
       { passive: true}
     )
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    }
   }, []);
 
   useEffect(() => {
-    getAttractions({query: debouncedKeyword});
+    fetchAttractions({query: debouncedKeyword});
     setSearchParams({query: debouncedKeyword});
   }, [debouncedKeyword])
 
@@ -100,7 +104,9 @@ const MainPage = () => {
           keyword={debouncedKeyword}
         />
       }
-      {/* <NoSearchResult /> */}
+      {attractions.length === 0 &&
+        <NoSearchResult />
+      }
     </>
   );
 }

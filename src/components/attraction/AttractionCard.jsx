@@ -6,6 +6,7 @@ import { typo, INK } from "../../styles";
 import { useState, memo } from "react";
 import HighlightedName from "../HighlightedName";
 import axios from "axios";
+import { putLike, deleteLike } from "../../services/api/attraction";
 
 /**
  * @param {object} props
@@ -32,11 +33,9 @@ const AttractionCard = ({
   const [isLiked, setIsLiked] = useState(like.isLiked);
   const [likeCount, setLikeCount] = useState(like.count);
 
-  // const coloredName = name keyword
-
-  const updateLike = async () => { 
+  const handleClickLineHeart = async () => { 
     try {
-      const response = await axios.put(`/api/attractions/${id}/like`);
+      const response = await putLike({ id: id });
   
       if (response.status === 204) {
         setIsLiked(true);
@@ -47,10 +46,10 @@ const AttractionCard = ({
     }
   }
 
-  const deleteLike = async () => {
+  const handleClickFillHeart = async () => {
     try {
-      const response = await axios.delete(`/api/attractions/${id}/like`);
-      
+      const response = await deleteLike({ id: id });
+
       if (response.status === 204) {
         setIsLiked(false);
         setLikeCount(prev => prev - 1);
@@ -75,8 +74,8 @@ const AttractionCard = ({
             <Like 
               isLike={isLiked}
               count={likeCount}
-              handleClickLineHeart={updateLike}
-              handleClickFillHeart={deleteLike}
+              handleClickLineHeart={handleClickLineHeart}
+              handleClickFillHeart={handleClickFillHeart}
             />
           </LikeWrapper>
         }
