@@ -37,20 +37,15 @@ const MainPage = () => {
   }) => {
     setLoading(true);
 
-    try {
-      const response = await getAttractions({
-        query: query
-      });
+    const response = await getAttractions({
+      query: query
+    });
 
-      if (response.status === 200) {
-        setAttractions(response.data);
-      }
-      
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+    if (response.status === 200) {
+      setAttractions(response.data);
     }
+
+    setLoading(false);
   };
 
   const onScroll = () => {

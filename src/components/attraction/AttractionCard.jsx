@@ -34,30 +34,22 @@ const AttractionCard = ({
   const [likeCount, setLikeCount] = useState(like.count);
 
   const handleClickLineHeart = async () => { 
-    try {
-      const response = await putLike({ id: id });
-  
-      if (response.status === 204) {
-        setIsLiked(true);
-        setLikeCount(prev => prev + 1);
-      }
-    } catch (error) {
-      console.log(error);
+    const response = await putLike({ id: id });
+
+    if (response.status === 204) {
+      setIsLiked(true);
+      setLikeCount(prev => prev + 1);
     }
-  }
+  };
 
   const handleClickFillHeart = async () => {
-    try {
-      const response = await deleteLike({ id: id });
+    const response = await deleteLike({ id: id });
 
-      if (response.status === 204) {
-        setIsLiked(false);
-        setLikeCount(prev => prev - 1);
-      }
-    } catch (error) {
-      console.log(error)
+    if (response.status === 204) {
+      setIsLiked(false);
+      setLikeCount(prev => prev - 1);
     }
-  }
+  };
 
   return (
     <Wrapper>

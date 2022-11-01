@@ -12,7 +12,7 @@ export const getAttractions = async ({ query }) => {
       return res;
     })
     .catch(err => {
-      return err.response;
+      console.log(err);
     })
 };
 
@@ -25,7 +25,7 @@ export const putLike = async({ id }) => {
       return res;
     })
     .catch(err => {
-      return err.response;
+      console.log(err);
     })
 };
 
@@ -38,6 +38,6 @@ export const deleteLike = async({ id }) => {
       return res;
     })
     .catch(err => {
-      return err.response;
+      console.log(err);
     })
 };
