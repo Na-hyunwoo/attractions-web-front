@@ -54,7 +54,7 @@ const AttractionCard = ({
   return (
     <Wrapper>
       <CoverImg src={coverImgUrl} alt={name}/>
-      <div>
+      <Body>
         <HighlightedName name={name} highlight={keyword}/>
         <Description>{description}</Description>
         <Rating 
@@ -71,7 +71,7 @@ const AttractionCard = ({
             />
           </LikeWrapper>
         }
-      </div>
+      </Body>
     </Wrapper>
   );
 }
@@ -108,6 +108,10 @@ const CoverImg = styled.img`
   margin-right: 16px;
 `;
 
+const Body = styled.div`
+  width: calc(100vw - 32px - 92px - 32px);
+`;
+
 const Description = styled.p`
   ${typo({
     size: "14pt",
@@ -116,6 +120,12 @@ const Description = styled.p`
     color: INK.BASE
   })}
   margin-bottom: 5px;
+
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 const LikeWrapper = styled.div`

@@ -39,6 +39,10 @@ export default HighlightedName;
 
 const Wrapper = styled.div`
   margin-bottom: 4px;
+
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Word = styled.span`
