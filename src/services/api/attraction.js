@@ -56,7 +56,7 @@ export const deleteLike = async({ id }) => {
   const url = `/api/attractions/${id}/like`;
 
   return await apiInstance
-    .put(url)
+    .delete(url)
     .then(res => {
       return res;
     })
