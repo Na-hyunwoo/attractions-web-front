@@ -5,7 +5,6 @@ import Rating from "../Rating";
 import { typo, INK } from "../../styles";
 import { useState, memo } from "react";
 import HighlightedName from "../HighlightedName";
-import axios from "axios";
 import { putLike, deleteLike } from "../../services/api/attraction";
 
 /**

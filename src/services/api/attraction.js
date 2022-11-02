@@ -1,7 +1,5 @@
 import { apiInstance } from ".";
 
-// 근데 이렇게 하면 서버에서 난 error가 err.response로 리턴이 되고, 
-// 그게 try .. catch에서 걸리나 ?
 export const getAttractions = async ({ query }) => {
 
   const urlWithQuery = '/api/attractions/?query=' + query; 
