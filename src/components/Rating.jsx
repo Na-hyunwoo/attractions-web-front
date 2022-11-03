@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import { FillStar, HalfFillStar, LineStar } from "../assets/SVGComponent/icon";
+import { FillStar, HalfFillStar, LineStar } from "../assets/svgComponent/icon";
 import { typo, WHITE } from "../styles";
 import PropTypes from "prop-types";
 
-// TODO: rating을 ceil하는 더 좋은 로직이 있는가 ? 
-// TODO: 논리에 오류는 없는가 ? 
 /**
  * @param {object} props
  * @param {number} props.rating

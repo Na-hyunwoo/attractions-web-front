@@ -1,8 +1,8 @@
-import { apiInstance } from ".";
+import { apiInstance } from "./index.js";
 
 export const getAttractions = async ({ query }) => {
 
-  const urlWithQuery = '/api/attractions/?query=' + query; 
+  const urlWithQuery = `/api/attractions/?query=${query}`; 
 
 
   return await apiInstance

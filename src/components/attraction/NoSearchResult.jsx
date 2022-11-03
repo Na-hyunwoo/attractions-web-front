@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { InBox } from "../../assets/SVGComponent/icon";
+import { InBox } from "../../assets/svgComponent/icon";
 import { typo } from "../../styles";
 import { INK } from "../../styles";
 

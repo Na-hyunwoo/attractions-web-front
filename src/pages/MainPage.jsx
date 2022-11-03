@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import SearchBox from "../components/SearchBox";
 import AttractionCardSkeleton from "../components/attraction/AttractionCardSkeleton";
-import AttractionCardList from "../container/AttractionsCardList";
+import AttractionCardList from "../containers/AttractionsCardList";
 import NoSearchResult from "../components/attraction/NoSearchResult";
 import { debounce, throttle } from "lodash";
 import { useSearchParams } from "react-router-dom";

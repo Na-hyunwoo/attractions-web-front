@@ -1,3 +1,3 @@
-import * as Icon from "./SVGComponent/icon";
+import * as Icon from "./svgComponent/icon";
 
 export { Icon };
