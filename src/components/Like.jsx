@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
-import { FillHeart, LineHeart } from "../assets/svgComponent/icon";
+import { FillHeart, LineHeart } from "../assets/svgComponents/icon";
 import { typo, WHITE } from "../styles";
 import PropTypes from "prop-types";
 import { usePrevious } from "../hooks/usePrevious";

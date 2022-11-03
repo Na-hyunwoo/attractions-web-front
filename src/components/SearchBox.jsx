@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Magnifier, XCircle } from "../assets/svgComponent/icon";
+import { Magnifier, XCircle } from "../assets/svgComponents/icon";
 import { typo, WHITE, INK, shadowLarge } from "../styles";
 import PropTypes from "prop-types";
 

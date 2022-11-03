@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FillStar, HalfFillStar, LineStar } from "../assets/svgComponent/icon";
+import { FillStar, HalfFillStar, LineStar } from "../assets/svgComponents/icon";
 import { typo, WHITE } from "../styles";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";

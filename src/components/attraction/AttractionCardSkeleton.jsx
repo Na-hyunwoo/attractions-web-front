@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Rating from "../Rating";
-import { LineHeart } from "../../assets/svgComponent/icon";
+import { LineHeart } from "../../assets/svgComponents/icon";
 import { WHITE } from "../../styles";
 
 const AttractionCardSkeleton = () => {
