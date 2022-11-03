@@ -6,6 +6,7 @@ import { typo, INK } from "../../styles";
 import { useState, memo } from "react";
 import HighlightedName from "../HighlightedName";
 import { putLike, deleteLike } from "../../services/api/attraction";
+import { debounce } from "lodash";
 
 /**
  * @param {object} props
@@ -32,23 +33,23 @@ const AttractionCard = ({
   const [isLiked, setIsLiked] = useState(like.isLiked);
   const [likeCount, setLikeCount] = useState(like.count);
 
-  const handleClickLineHeart = async () => { 
+  const handleClickLineHeart = debounce(async () => { 
     const response = await putLike({ id: id });
 
     if (response.status === 204) {
       setIsLiked(true);
       setLikeCount(prev => prev + 1);
     }
-  };
+  }, 200);
 
-  const handleClickFillHeart = async () => {
+  const handleClickFillHeart = debounce(async () => {
     const response = await deleteLike({ id: id });
 
     if (response.status === 204) {
       setIsLiked(false);
       setLikeCount(prev => prev - 1);
     }
-  };
+  }, 200);
 
   return (
     <Wrapper>
