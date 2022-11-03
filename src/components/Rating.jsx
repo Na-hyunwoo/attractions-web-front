@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FillStar, HalfFillStar, LineStar } from "../assets/svgComponent/icon";
 import { typo, WHITE } from "../styles";
 import PropTypes from "prop-types";
+import { nanoid } from "nanoid";
 
 /**
  * @param {object} props
@@ -25,14 +26,14 @@ const Rating = ({
 
   return (
     <Wrapper>
-      {filled.map((item, index) => (
-        <FillStar key={index} />
+      {filled.map(item => (
+        <FillStar key={nanoid()} />
       ))}
-      {halfFilled.map((item, index) => (
-        <HalfFillStar key={index} />
+      {halfFilled.map(item => (
+        <HalfFillStar key={nanoid()} />
       ))}
-      {empty.map((item, index) => (
-        <LineStar key={index} />
+      {empty.map(item => (
+        <LineStar key={nanoid()} />
       ))}
       {calcedCount !== undefined && <Number>({calcedCount})</Number>}
     </Wrapper>

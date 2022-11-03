@@ -2,6 +2,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { typo } from "../styles";
 import { INK, SKY } from "../styles";
+import { nanoid } from "nanoid";
 
 /**
  * 
@@ -19,12 +20,12 @@ const HighlightedName = ({
 
   return (
     <Wrapper>
-      {splitedName.map((word, index) => 
+      {splitedName.map(word => 
         word === highlight 
           ?
-            (<HighlitedWord key={index}>{word}</HighlitedWord>)
+            (<HighlitedWord key={nanoid()}>{word}</HighlitedWord>)
           :
-            (<Word key={index}>{word}</Word>)
+            (<Word key={nanoid()}>{word}</Word>)
       )}
     </Wrapper>
   );

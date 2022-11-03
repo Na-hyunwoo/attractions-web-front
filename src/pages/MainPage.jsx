@@ -8,6 +8,7 @@ import { debounce, throttle } from "lodash";
 import { useSearchParams } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
 import { getAttractions } from "../services/api/attraction";
+import { nanoid } from "nanoid";
 
 const NUMBER_OF_SKELETON_UI = 5;
 
@@ -85,8 +86,8 @@ const MainPage = () => {
         />
       </SearchBoxWrapper>
       {loading && 
-        Array(NUMBER_OF_SKELETON_UI).fill("").map((item, index) => 
-          <AttractionCardSkeleton key={index}/>
+        Array(NUMBER_OF_SKELETON_UI).fill("").map(item => 
+          <AttractionCardSkeleton key={nanoid()}/>
         )
       }
       {attractions.length > 0 && 
