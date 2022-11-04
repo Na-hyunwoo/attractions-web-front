@@ -16,21 +16,27 @@ const SearchBox = ({
   handleClickX,
   keyword,
   isScroll,
-  onKeyDown
+  onKeyDown,
 }) => {
   return (
     <Wrapper isScroll={isScroll}>
       <InputWrapper>
         <Magnifier />
-        <Input 
-          type= "text" 
-          name="word" 
-          placeholder="검색" 
-          onChange={handleChange}
-          value={keyword}
-          onKeyDown={onKeyDown}
-        />
-        {keyword.length > 0 && <XButton onClick={handleClickX}/>}
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Input
+            type="text"
+            name="word"
+            placeholder="검색"
+            onChange={handleChange}
+            value={keyword}
+            onKeyDown={onKeyDown}
+          />
+        </Form>
+        {keyword.length > 0 && <XButton onClick={handleClickX} />}
       </InputWrapper>
     </Wrapper>
   );
@@ -41,13 +47,13 @@ SearchBox.propTypes = {
   handleClickX: PropTypes.func.isRequired,
   keyword: PropTypes.string,
   isScroll: PropTypes.bool,
-}
+};
 
 export default SearchBox;
 
 const Wrapper = styled.div`
   padding: 17px 25px;
-  ${({isScroll}) => isScroll ? shadowLarge : ``};
+  ${({ isScroll }) => (isScroll ? shadowLarge : ``)};
 `;
 
 const InputWrapper = styled.div`
@@ -59,6 +65,10 @@ const InputWrapper = styled.div`
   align-items: center;
 
   position: relative;
+`;
+
+const Form = styled.form`
+  width: 100%;
 `;
 
 const Input = styled.input`
@@ -80,7 +90,7 @@ const Input = styled.input`
       size: "16pt",
       height: "16pt",
       weight: "400",
-      color: INK.LIGHT
+      color: INK.LIGHT,
     })}
   }
 `;

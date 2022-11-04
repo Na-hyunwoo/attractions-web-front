@@ -27,18 +27,17 @@ const AttractionCard = ({
   reviews,
   like,
   isLikeable = true,
-  keyword
+  keyword,
 }) => {
-
   const [isLiked, setIsLiked] = useState(like.isLiked);
   const [likeCount, setLikeCount] = useState(like.count);
 
-  const handleClickLineHeart = debounce(async () => { 
+  const handleClickLineHeart = debounce(async () => {
     const response = await putLike({ id: id });
 
     if (response.status === 204) {
       setIsLiked(true);
-      setLikeCount(prev => prev + 1);
+      setLikeCount((prev) => prev + 1);
     }
   }, 200);
 
@@ -47,34 +46,31 @@ const AttractionCard = ({
 
     if (response.status === 204) {
       setIsLiked(false);
-      setLikeCount(prev => prev - 1);
+      setLikeCount((prev) => prev - 1);
     }
   }, 200);
 
   return (
     <Wrapper>
-      <CoverImg src={coverImgUrl} alt={name}/>
+      <CoverImg src={coverImgUrl} alt={name} />
       <Body>
-        <HighlightedName name={name} highlight={keyword}/>
+        <HighlightedName name={name} highlight={keyword} />
         <Description>{description}</Description>
-        <Rating 
-          rating={reviews.averageRating}
-          count={reviews.count}
-        />
-        {isLikeable && 
+        <Rating rating={reviews.averageRating} count={reviews.count} />
+        {isLikeable && (
           <LikeWrapper>
-            <Like 
+            <Like
               isLike={isLiked}
               count={likeCount}
               handleClickLineHeart={handleClickLineHeart}
               handleClickFillHeart={handleClickFillHeart}
             />
           </LikeWrapper>
-        }
+        )}
       </Body>
     </Wrapper>
   );
-}
+};
 
 AttractionCard.propTypes = {
   name: PropTypes.string.isRequired,
@@ -85,11 +81,11 @@ AttractionCard.propTypes = {
   like: PropTypes.object.isRequired,
   isLikeable: PropTypes.bool,
   keyword: PropTypes.string,
-}
+};
 
 export default memo(AttractionCard);
 
-const Wrapper = styled.div`
+const Wrapper = styled.li`
   width: 100vw;
 
   padding: 16px;
@@ -117,7 +113,7 @@ const Description = styled.p`
     size: "14pt",
     height: "14pt",
     weight: 500,
-    color: INK.BASE
+    color: INK.BASE,
   })}
   margin-bottom: 5px;
 

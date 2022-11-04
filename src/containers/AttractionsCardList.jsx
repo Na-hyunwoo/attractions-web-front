@@ -2,19 +2,16 @@ import PropTypes from "prop-types";
 import AttractionCard from "../components/attraction/AttractionCard";
 
 /**
- * 
+ *
  * @param {object} props
  * @param {array{}} props.attractions
  * @param {string} props.keyword
  */
-const AttractionCardList = ({
-  attractions,
-  keyword
-}) => {
+const AttractionCardList = ({ attractions, keyword }) => {
   return (
-    <div>
-      {attractions.map(attraction => (
-        <AttractionCard 
+    <ul>
+      {attractions.map((attraction) => (
+        <AttractionCard
           key={attraction.id}
           id={attraction.id}
           name={attraction.name}
@@ -25,13 +22,13 @@ const AttractionCardList = ({
           keyword={keyword}
         />
       ))}
-    </div>
+    </ul>
   );
 };
 
 AttractionCardList.propTypes = {
-  attractions: PropTypes.array.isRequired, 
-  keyword: PropTypes.string
+  attractions: PropTypes.array.isRequired,
+  keyword: PropTypes.string,
 };
 
 export default AttractionCardList;

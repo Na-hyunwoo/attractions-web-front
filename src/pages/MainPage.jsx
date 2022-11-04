@@ -13,7 +13,6 @@ import { nanoid } from "nanoid";
 const NUMBER_OF_SKELETON_UI = 5;
 
 const MainPage = () => {
-
   const [keyword, setKeyword] = useState("");
   const [isScroll, setIsScroll] = useState(false);
   const [attractions, setAttractions] = useState([]);
@@ -28,18 +27,16 @@ const MainPage = () => {
 
   const onEnterDown = debounce((e) => {
     if (e.code === "Enter") {
-      fetchAttractions({query: e.target.value});
-      setSearchParams({query: e.target.value});
+      fetchAttractions({ query: e.target.value });
+      setSearchParams({ query: e.target.value });
     }
   }, 300);
 
-  const fetchAttractions = async ({
-    query = "",
-  }) => {
+  const fetchAttractions = async ({ query = "" }) => {
     setLoading(true);
 
     const response = await getAttractions({
-      query: query
+      query: query,
     });
 
     if (response.status === 200) {
@@ -58,26 +55,24 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    window.addEventListener(
-      'scroll',
-      throttle(onScroll, 300),
-      { passive: true}
-    )
+    window.addEventListener("scroll", throttle(onScroll, 300), {
+      passive: true,
+    });
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
-    }
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   useEffect(() => {
-    fetchAttractions({query: debouncedKeyword});
-    setSearchParams({query: debouncedKeyword});
-  }, [debouncedKeyword])
+    fetchAttractions({ query: debouncedKeyword });
+    setSearchParams({ query: debouncedKeyword });
+  }, [debouncedKeyword]);
 
-  return(
+  return (
     <>
       <SearchBoxWrapper>
-        <SearchBox 
+        <SearchBox
           keyword={keyword}
           handleChange={handleKeywordChange}
           handleClickX={() => setKeyword("")}
@@ -85,28 +80,25 @@ const MainPage = () => {
           onKeyDown={onEnterDown}
         />
       </SearchBoxWrapper>
-      {loading && 
-        Array(NUMBER_OF_SKELETON_UI).fill("").map(item => 
-          <AttractionCardSkeleton key={nanoid()}/>
-        )
-      }
-      {attractions.length > 0 && 
-        <AttractionCardList 
-          attractions={attractions} 
+      {loading &&
+        Array(NUMBER_OF_SKELETON_UI)
+          .fill("")
+          .map((item) => <AttractionCardSkeleton key={nanoid()} />)}
+      {attractions.length > 0 && (
+        <AttractionCardList
+          attractions={attractions}
           keyword={debouncedKeyword}
         />
-      }
-      {attractions.length === 0 &&
-        <NoSearchResult />
-      }
+      )}
+      {attractions.length === 0 && <NoSearchResult />}
     </>
   );
-}
+};
 
 export default MainPage;
 
 const SearchBoxWrapper = styled.div`
-  background: #FFF;  
+  background: #fff;
 
   position: sticky;
   top: 0px;

@@ -13,13 +13,13 @@ const NoSearchResult = () => {
       </InnerWrapper>
     </Wrapper>
   );
-}
+};
 
 export default NoSearchResult;
 
 const Wrapper = styled.div`
-  width: 100vw; 
-  height: 100vw; 
+  width: 100vw;
+  height: 100vw;
 
   display: flex;
   align-items: center;
@@ -38,6 +38,6 @@ const Label = styled.p`
     size: "16pt",
     height: "24pt",
     weight: 500,
-    color: INK.LIGHT
+    color: INK.LIGHT,
   })}
 `;

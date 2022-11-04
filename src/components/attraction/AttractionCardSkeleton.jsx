@@ -11,7 +11,7 @@ const AttractionCardSkeleton = () => {
         <NameSkeleton />
         <DescriptionSkeleton1 />
         <DescriptionSkeleton2 />
-        <Rating rating={0} count={undefined}/>
+        <Rating rating={0} count={undefined} />
       </div>
       <Heart />
     </Wrapper>
@@ -69,7 +69,7 @@ const DescriptionSkeleton2 = styled.div`
 `;
 
 const Heart = styled(LineHeart)`
-  position: absolute; 
+  position: absolute;
   right: 16px;
   bottom: 16px;
 `;

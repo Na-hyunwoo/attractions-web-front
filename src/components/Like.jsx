@@ -16,46 +16,46 @@ const Like = ({
   count,
   isLike = false,
   handleClickFillHeart = () => {},
-  handleClickLineHeart = () => {}
+  handleClickLineHeart = () => {},
 }) => {
-
-  // isIncrease가 0이면 초기상태, 1이면 증가된 상태, -1이면 감소된 상태 
+  // isIncrease가 0이면 초기상태, 1이면 증가된 상태, -1이면 감소된 상태
   const [isIncrease, setIsIncrease] = useState(0);
   const previousCount = usePrevious(count);
 
   const filteringCount = (count) => {
     return count > 999 ? "999+" : count;
-  }
+  };
 
   useEffect(() => {
     if (previousCount < count) {
       setIsIncrease(1);
-    } else if (previousCount > count){
+    } else if (previousCount > count) {
       setIsIncrease(-1);
     }
   }, [previousCount, count]);
 
   return (
     <Wrapper>
-      <InvisibleLargerNumber 
-        isIncrease={isIncrease}
-      >
+      <InvisibleLargerNumber isIncrease={isIncrease}>
         {filteringCount(count)}
       </InvisibleLargerNumber>
-      <VisibleNumber 
-        isIncrease={isIncrease} 
-      >
+      <VisibleNumber isIncrease={isIncrease}>
         {filteringCount(count)}
       </VisibleNumber>
-      <InvisibleSmallerNumber 
-        isIncrease={isIncrease}
-      >
+      <InvisibleSmallerNumber isIncrease={isIncrease}>
         {filteringCount(count)}
       </InvisibleSmallerNumber>
-      {isLike 
-        ? <FillHeart style={{cursor: "pointer"}} onClick={handleClickFillHeart}/>
-        : <LineHeart style={{cursor: "pointer"}} onClick={handleClickLineHeart}/>
-      }
+      {isLike ? (
+        <FillHeart
+          style={{ cursor: "pointer" }}
+          onClick={handleClickFillHeart}
+        />
+      ) : (
+        <LineHeart
+          style={{ cursor: "pointer" }}
+          onClick={handleClickLineHeart}
+        />
+      )}
     </Wrapper>
   );
 };
@@ -65,7 +65,7 @@ Like.propTypes = {
   isLike: PropTypes.bool,
   handleClickFillHeart: PropTypes.func,
   handleClickLineHeart: PropTypes.func,
-}
+};
 
 export default Like;
 
@@ -75,20 +75,18 @@ const Wrapper = styled.div`
 
 const VisibleNumber = styled.span`
   ${typo({
-    size: "14pt", 
+    size: "14pt",
     height: "16pt",
     weight: 700,
-    color: WHITE.DARK
+    color: WHITE.DARK,
   })};
   display: flex;
   align-items: center;
 
   margin-right: 5.55px;
 
-  opacity: ${({isIncrease, isDecrease}) => isIncrease || isDecrease 
-    ? css `0`
-    : css `1`
-  };
+  opacity: ${({ isIncrease, isDecrease }) =>
+    isIncrease || isDecrease ? css`0` : css`1`};
 `;
 
 const slideDownKeyframes = keyframes`
@@ -104,10 +102,10 @@ const slideDownKeyframes = keyframes`
 
 const InvisibleLargerNumber = styled.span`
   ${typo({
-    size: "14pt", 
+    size: "14pt",
     height: "16pt",
     weight: 700,
-    color: WHITE.DARK
+    color: WHITE.DARK,
   })};
   display: flex;
   align-items: center;
@@ -116,18 +114,17 @@ const InvisibleLargerNumber = styled.span`
 
   position: absolute;
 
-  animation: ${({isIncrease}) => (isIncrease === 0
-    ? css `` 
-      : 
-        isIncrease === 1 ? css `${slideDownKeyframes} 0.5s`
-        : css ``
-  )};
+  animation: ${({ isIncrease }) =>
+    isIncrease === 0
+      ? css``
+      : isIncrease === 1
+      ? css`
+          ${slideDownKeyframes} 0.5s
+        `
+      : css``};
 
-  opacity: ${({isIncrease}) => (isIncrease === 0
-    ? css `0`  
-    : isIncrease === -1 ? css `0`
-    : css `1`
-  )}
+  opacity: ${({ isIncrease }) =>
+    isIncrease === 0 ? css`0` : isIncrease === -1 ? css`0` : css`1`};
 `;
 
 const slideUpKeyframes = keyframes`
@@ -143,10 +140,10 @@ const slideUpKeyframes = keyframes`
 
 const InvisibleSmallerNumber = styled.span`
   ${typo({
-    size: "14pt", 
+    size: "14pt",
     height: "16pt",
     weight: 700,
-    color: WHITE.DARK
+    color: WHITE.DARK,
   })};
   display: flex;
   align-items: center;
@@ -155,15 +152,15 @@ const InvisibleSmallerNumber = styled.span`
 
   position: absolute;
 
-  animation : ${({isIncrease}) => (isIncrease === 0
-    ? css `` 
-    : isIncrease === -1 ? css`${slideUpKeyframes} 0.5s`
-    : css`` 
-  )};
+  animation: ${({ isIncrease }) =>
+    isIncrease === 0
+      ? css``
+      : isIncrease === -1
+      ? css`
+          ${slideUpKeyframes} 0.5s
+        `
+      : css``};
 
-  opacity: ${({isIncrease}) => (isIncrease === 0
-    ? css `0`
-    : isIncrease === 1 ? css`0`  
-    : css`1`
-  )}
+  opacity: ${({ isIncrease }) =>
+    isIncrease === 0 ? css`0` : isIncrease === 1 ? css`0` : css`1`};
 `;
