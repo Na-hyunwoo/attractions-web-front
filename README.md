@@ -1,26 +1,32 @@
-# 트리플 프론트엔드 엔지니어 채용 과제
+# 트리플 x 인터파크 프론트엔드 엔지니어 채용 과제
 
-## 요구사항
+## Index
 
-[디자인 시안](https://www.figma.com/file/EymGb3djHxVHQtC59WHT5a)
+- [Overview](#overview)
+- [Getting Started](#getting-started)
+- [Features](#features)
+- [How To Make](#how-to-make)
+- [Trouble Shooting](#try)
 
-### 필수 요구 사항
+## Overview
 
-다음 내용은 반드시 충족해야 하는 요구사항입니다.
+**관광명소를 보여주고 검색할 수 있는 간단한 웹 애플리케이션입니다.**
 
-### 관광지
+## Features
+
+**관광지**
 
 - 관광지 목록을 확인할 수 있습니다.
 - 관광지의 평점을 별 개수로 확인할 수 있습니다. 평점은 0.5 단위로 올림하여 별 0개부터 별 5개로 표현합니다. 예를 들어 평점이 0.3점이면 별 반개로, 4.84점이면 별 5개로 표현합니다.
 - 관광지에 달린 리뷰의 개수를 확인할 수 있습니다. 리뷰의 개수는 최대 99까지 표시하며 99를 넘는 수는 "99+"로 표현합니다.
 - 관광지를 좋아요한 사람 수를 확인할 수 있습니다. 관광지를 좋아요한 사람 수는 최대 999까지 999를 넘는 수는 "999+"로 표현합니다.
 
-### 좋아요 / 좋아요 취소
+**좋아요 / 좋아요 취소**
 
 - 관광지를 좋아요할 수 있습니다.
 - 좋아요한 관광지를 좋아요 취소할 수 있습니다.
 
-### 검색
+**검색**
 
 - 관광지를 검색할 수 있습니다.
 - 검색 영역은 화면 상단에 고정하고 스크롤을 내리면 그림자를 표시합니다.
@@ -30,70 +36,101 @@
 - 관광지의 이름에서 검색어를 하이라이트합니다.
 - 검색어를 입력했을 있을 때는 입력 영역 우측에 검색어를 한 번에 제거하는 버튼을 표시합니다.
 
-### 선택 요구사항
+## Getting Started
 
-다음 내용은 꼭 충족하지 않아도 되는 내용입니다. 잘 구현되었을 경우 가산점이 있을 수 있습니다. 구현하지 않더라도 감점은 없습니다.
+1. npm install
+2. npm start
 
-- 좋아요 / 좋아요 취소 버튼을 눌렀을 때 인터랙션
-- API가 오류를 반환했을 때 처리
-- 사용자가 의도하지 않은 행동을 할 때 방어 UI
-- 기타 구현하고 싶은 기능
+## How To Make
 
-## API
+**Process**
 
-### `GET /api/attractions`
+1. 스타일 디렉토리 개발
+2. 컴포넌트 개발
+3. 컴포넌트 조합
+4. 서버로부터 데이터 받기
+5. 성능 최적화
+6. 기타 기능 개발
 
-관광지 목록을 조회합니다. `query`를 query-string으로 받습니다. `query`를 넣으면 해당 검색어가 이름에 포함된 관광지만 반환합니다.
+**What I Do To Improve Project**
 
-응답의 관광지 형식 예시는 다음과 같습니다.
+- axios를 통한 서버 통신
+- 서버 통신 로딩시 Skeleton UI 노출
+- 성능 최적화
+  - memo 사용으로 컴포넌트 랜더링 최소화
+  - debounce, throttle, useDebounce 사용으로 API 호출 최소화
+- 사용자의 예상치 못한 행동 대응
+  - debounce를 사용하여 한번에 다량으로 발생하는 API호출 최소화
+  - ex. 빠르게 좋아요를 여러번 누르거나 빠르게 검색창에서 엔터를 여러번 누르는 경우
+- 좋아요 / 좋아요 취소 인터랙션 구현
+  - 라이브러리를 사용하지 않고 css만으로 구현
+- 기타 디테일한 UI 개선
+  - 카드 제목 1줄 이상은 말줄임표 처리
+  - 카드 설명 2줄 이상은 말줌임표 처리
+- 에러 핸들링
+
+## Trouble Shooting
+
+npm test시 import를 읽지 못하는 문제가 발생했습니다.
+
+프로젝트는 ES6로 구성하였고 테스트 환경은 commnjs만을 이해할 수 있기 때문에 transpile 과정이 필요했습니다. 따라서 jest library를 설치하고 package.json을 다음과 같이 구성하였습니다.
+
+.package.json
+
+```js
+"scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "jest",
+    "eject": "react-scripts eject",
+    "prettier": "prettier . --write",
+    "prepare": "husky install"
+  },
+```
+
+이후에 ES6 module을 commonjs로 transpile 해주는 babel 설정을 하였습니다. 추가적으로 svg와 관련되서 많은 오류가 발견되어 plugin을 찾아 일일이 추가해주었습니다.
+
+.babelrc
 
 ```json
 {
-  "id": "3d32908d-72e3-4db1-8376-dc707c3d51121",
-  "name": "카오산 로드",
-  "description": "낮과 밤 서로 다른 매력을 지닌 번화한 거리",
-  "coverImageUrl": "https://media.triple.guide/triple-cms/c_limit,f_auto,h_1024,w_1024/7b17a6dd-ea68-4804-b5b8-57fe656d982e.jpeg",
-  "reviews": {
-    "averageRating": 3.375,
-    "count": 1632
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "targets": {
+    "node": "current"
   },
-  "like": {
-    "count": 30402
+  "plugins": [
+    "@babel/plugin-transform-modules-commonjs",
+    "babel-plugin-inline-react-svg",
+    "babel-plugin-named-asset-import"
+  ]
+}
+```
+
+여기까지 진행하니 이제는 jsx파일 읽지 못했습니다. 따라서
+
+jest.config.json
+
+```json
+{
+  "moduleFileExtensions": ["js", "jsx", "json"],
+  "moduleNameMapper": {
+    "^@/(.*)$": "./src/$1"
+  },
+  "testMatch": [
+    "**/__tests__/**/*.[jt]s?(x)",
+    "**/?(*.)+(spec|test).[jt]s?(x)"
+  ],
+  "transformIgnorePatterns": ["./src/node_modules/"],
+
+  "verbose": true,
+  "collectCoverage": true,
+  "testEnvironment": "jsdom",
+  "transform": {
+    "\\.[jt]sx?$": "babel-jest"
   }
 }
 ```
 
-### `PUT /api/attractions/:attractionId/like`
+와 같이 설정하니 이번에는 TypeError: Cannot read properties of undefined (reading '')가 발생하였습니다.
 
-주어진 ID의 관광지를 좋아요합니다.
-
-204 응답을 반환합니다.
-
-### `DELETE /api/attractions/:attractionId/like`
-
-주어진 ID의 관광지를 좋아요 취소합니다.
-
-204 응답을 반환합니다.
-
-## 유의사항
-
-- `nucleus-ui`를 구현하는 라이브러리를 사용할 수 없습니다. 디자인 요소를 직접 구현해 주세요.
-- 과제를 완료한 이후 이 README를 지우고, 대신 과제에 대한 README를 작성하세요. 구현 결과물을 실행할 수 있는 방법과 과제 해결 과정은 꼭 작성해 주세요.
-- 만약 제공된 템플릿이나 테스트 코드, mock 서버 코드에서 문제를 발견했다면 문제를 수정한 후, README에서 수정 과정을 설명해 주세요.
-
-## 제출 전 검토할 내용
-
-- 테스트가 모두 통과하는지 확인하세요.
-- 불필요한 코드나 주석, 콘솔 로그를 모두 없앴는지 확인하세요.
-- 요구사항을 모두 만족했는지 확인하세요.
-
-## 제출 방법
-
-[git bundle 명령어](https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-Bundle)를 사용해서 제출 파일을 만듭니다.
-깃 레포지토리에서 다음을 입력하세요.
-
-```sh
-git bundle create <지원자 성함>.bundle HEAD main
-```
-
-생성된 `<지원자 성함>.bundle` 파일을 이메일을 통해 제출해 주세요.
+왜 이런 문제가 발생하는지 알 수 없어 해결하지 못하고 있는 상태입니다.
