@@ -11,16 +11,17 @@ const AttractionCardList = ({ attractions, keyword }) => {
   return (
     <ul>
       {attractions.map((attraction) => (
-        <AttractionCard
-          key={attraction.id}
-          id={attraction.id}
-          name={attraction.name}
-          description={attraction.description}
-          coverImgUrl={attraction.coverImageUrl}
-          reviews={attraction.reviews}
-          like={attraction.like}
-          keyword={keyword}
-        />
+        <li key={attraction.id}>
+          <AttractionCard
+            id={attraction.id}
+            name={attraction.name}
+            description={attraction.description}
+            coverImgUrl={attraction.coverImageUrl}
+            reviews={attraction.reviews}
+            like={attraction.like}
+            keyword={keyword}
+          />
+        </li>
       ))}
     </ul>
   );

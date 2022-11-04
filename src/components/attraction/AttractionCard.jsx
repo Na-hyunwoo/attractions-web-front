@@ -85,7 +85,7 @@ AttractionCard.propTypes = {
 
 export default memo(AttractionCard);
 
-const Wrapper = styled.li`
+const Wrapper = styled.section`
   width: 100vw;
 
   padding: 16px;

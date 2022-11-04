@@ -70,7 +70,7 @@ const MainPage = () => {
   }, [debouncedKeyword]);
 
   return (
-    <>
+    <main>
       <SearchBoxWrapper>
         <SearchBox
           keyword={keyword}
@@ -91,7 +91,7 @@ const MainPage = () => {
         />
       )}
       {attractions.length === 0 && <NoSearchResult />}
-    </>
+    </main>
   );
 };
 
