@@ -135,6 +135,12 @@ jest.config.json
 }
 ```
 
-와 같이 설정하니 이번에는 TypeError: Cannot read properties of undefined (reading '')가 발생하였습니다.
+와 같이 설정하니 이번에는 
+> 
+>TypeError: Cannot read properties of undefined (reading '')
 
-왜 이런 문제가 발생하는지 알 수 없어 해결하지 못하고 있는 상태입니다.
+가 발생하였습니다.
+
+제출 시간이 임박하여 왜 이런 문제가 발생하는지 알 수 없어 해결하지 못하였습니다. 😱
+
+ 
