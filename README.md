@@ -36,7 +36,6 @@
   - ex. 빠르게 좋아요를 여러번 누르거나 빠르게 검색창에서 엔터를 여러번 누르는 경우 
 - 좋아요 / 좋아요 취소 인터랙션 구현 
   - 라이브러리를 사용하지 않고 css만으로 구현 
-- 좋아요 / 좋아요 취소 인터랙션 구현 
 - 기타 디테일한 UI 개선   
   - 카드 제목 1줄 이상은 말줄임표 처리  
   - 카드 설명 2줄 이상은 말줌임표 처리 
@@ -80,14 +79,26 @@ npm test시 import를 읽지 못하는 문제가 발생했습니다.
 
 여기까지 진행하니 이제는 jsx파일 읽지 못했습니다. 따라서 
 
+jest.config.json
 ```json
 {
   "moduleFileExtensions": ["js", "jsx", "json"],
+  "moduleNameMapper": {
+    "^@/(.*)$": "./src/$1"
+  },
+  "testMatch": [ "**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)" ],
+  "transformIgnorePatterns": ["./src/node_modules/"],
 
-  "testEnvironment": "jsdom"
+  "verbose": true,
+  "collectCoverage": true,
+  "testEnvironment": "jsdom",
+  "transform": {
+    "\\.[jt]sx?$": "babel-jest"
+  }
 }
 ```
 
-와 같이 설정하니 이번에는 
-html파일을 읽지 못했습니다.
+와 같이 설정하니 이번에는 TypeError: Cannot read properties of undefined (reading '')가 발생하였습니다. 
+
+왜 이런 문제가 발생하는지 알 수 없어 해결하지 못했습니다. 
  
