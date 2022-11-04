@@ -44,3 +44,22 @@
 
 
 ## Trouble Shooting
+
+npm test시 import를 읽지 못하는 문제가 발생했습니다. 
+
+프로젝트는 ES6로 구성하였고 테스트 환경은 commnjs만을 이해할 수 있기 때문에 transpile 과정이 필요했습니다. 
+
+따라서, ES6 module을 commonjs로 transpile 해주는 babel 설정을 하였습니다.
+```jsx
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "targets": {
+    "node": "current"
+  },
+  "plugins": [
+    "@babel/plugin-transform-modules-commonjs", 
+    "babel-plugin-inline-react-svg", 
+    "babel-plugin-named-asset-import"
+  ]
+}
+```
