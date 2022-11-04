@@ -71,9 +71,12 @@
 
 ## Trouble Shooting
 
-npm test시 import를 읽지 못하는 문제가 발생했습니다.
+npm test시 
+> 
+> SyntaxError: Cannot use import statement outside a module
+과 같은 에러가 발생했습니다. 
 
-프로젝트는 ES6로 구성하였고 테스트 환경은 commnjs만을 이해할 수 있기 때문에 transpile 과정이 필요했습니다. 따라서 jest library를 설치하고 package.json을 다음과 같이 구성하였습니다.
+프로젝트는 ES6로  테스트 환경은 commnjs만을 이해할 수 있기 때문에 transpile 과정이 필요했습니다. 따라서 jest library를 설치하고 package.json을 다음과 같이 구성하였습니다.
 
 .package.json
 
