@@ -50,7 +50,7 @@ npm test시 import를 읽지 못하는 문제가 발생했습니다.
 프로젝트는 ES6로 구성하였고 테스트 환경은 commnjs만을 이해할 수 있기 때문에 transpile 과정이 필요했습니다. 따라서 jest library를 설치하고 package.json을 다음과 같이 구성하였습니다. 
 
 .package.json
-```jsx
+```js
 "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -64,7 +64,7 @@ npm test시 import를 읽지 못하는 문제가 발생했습니다.
 이후에 ES6 module을 commonjs로 transpile 해주는 babel 설정을 하였습니다. 추가적으로 svg와 관련되서 많은 오류가 발견되어 plugin을 찾아 일일이 추가해주었습니다. 
 
 .babelrc
-```jsx
+```json
 {
   "presets": ["@babel/preset-env", "@babel/preset-react"],
   "targets": {
@@ -76,4 +76,18 @@ npm test시 import를 읽지 못하는 문제가 발생했습니다.
     "babel-plugin-named-asset-import"
   ]
 }
+```
 
+여기까지 진행하니 이제는 jsx파일 읽지 못했습니다. 따라서 
+
+```json
+{
+  "moduleFileExtensions": ["js", "jsx", "json"],
+
+  "testEnvironment": "jsdom"
+}
+```
+
+와 같이 설정하니 이번에는 
+html파일을 읽지 못했습니다.
+ 
