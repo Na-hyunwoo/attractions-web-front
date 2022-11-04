@@ -2,7 +2,7 @@
 ## Index
   - [Overview](#overview) 
   - [Getting Started](#getting-started)
-  - [Features] (#features)
+  - [Features](#features)
   - [How To Make](#how-to-make)
   - [Trouble Shooting](#try)
 
