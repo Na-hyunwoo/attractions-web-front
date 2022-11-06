@@ -1,5 +1,3 @@
-# 트리플 x 인터파크 프론트엔드 엔지니어 채용 과제
-
 ## Index
 
 - [Overview](#overview)
