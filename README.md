@@ -68,3 +68,166 @@
   - 카드 제목 1줄 이상은 말줄임표 처리
   - 카드 설명 2줄 이상은 말줌임표 처리
 - 에러 핸들링
+
+## 트러블 슈팅
+
+![](https://velog.velcdn.com/images/dusdjeks/post/85834dea-5014-4fd9-ba44-8d176a49e75d/image.png)
+
+Jest는 ECMAScript를 모르기 때문에 import가 무엇인지 모른다. 그래서 vscode에서 추천해주는 페이지를 따라가 다음과 같은 해결책을 찾았다.
+
+```js
+node --experimental-vm-modules node_modules/jest/bin/jest.js
+```
+
+이 코드는 jest에서 ECMAScript를 사용할 수 있게 해주는 설정이다. 그러나 나의 경우에 이는 해결책이 되어주지 못했고 다른 해결 방안을 찾아보았다. stack overflow에서 추천하는 "type": "module"또한 동작하지 않았다.
+
+그래서 이러한 문제의 원인에 대해서 생각을 해보다, 내가 짠 코드는 ES6이므로, babel 설정을 통해 commonjs로 바꿔주면 되지 않을까 ? 라는 생각을 하게 되었다.
+
+따라서, ES6 module을 commonjs로 transpile 해주는 babel 설정을 하였다. 에러해 해당하는 plugin을 일일이 찾는 것이 굉장히 많은 시간을 들게 하였다. (이틀정도 밤새 찾았다...😱)
+
+_.babelrc_
+
+```json
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "targets": {
+    "node": "current"
+  },
+  "plugins": [
+    "@babel/plugin-transform-modules-commonjs",
+    "babel-plugin-inline-react-svg",
+    "babel-plugin-named-asset-import"
+  ]
+}
+```
+
+여기까지 진행했을 때에는 jsx파일 읽지 못하는 에러가 발생하였다.
+따라서 jest 환경 설정도 다시금 해주었다.
+
+jest.config.json
+
+```json
+{
+  "moduleFileExtensions": ["js", "jsx", "json"],
+  "testEnvironment": "jsdom"
+  "moduleNameMapper": {
+    "^@/(.*)$": "./src/$1"
+  },
+  "testMatch": [ "**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)" ],
+  "transformIgnorePatterns": ["./src/node_modules/"],
+  "verbose": true,
+  "collectCoverage": true,
+  "testEnvironment": "jsdom",
+  "transform": {
+    "\\.[jt]sx?$": "babel-jest"
+  }
+}
+```
+
+다음은 package.json 전문이다.
+
+```json
+{
+  "name": "frontend-assignment",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^1.1.3",
+    "jest": "^29.2.2",
+    "lodash": "^4.17.21",
+    "nanoid": "^4.0.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.2",
+    "react-scripts": "5.0.1",
+    "styled-components": "^5.3.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.6",
+    "@babel/plugin-transform-modules-commonjs": "^7.19.6",
+    "@babel/preset-env": "^7.19.4",
+    "@babel/preset-react": "^7.18.6",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.2.1",
+    "babel-jest": "^29.2.2",
+    "babel-plugin-inline-react-svg": "^2.0.1",
+    "babel-plugin-named-asset-import": "^0.3.8",
+    "husky": "^8.0.0",
+    "jest-environment-jsdom": "^29.2.2",
+    "lint-staged": "^13.0.3",
+    "msw": "^0.42.3",
+    "prettier": "^2.7.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "jest",
+    "eject": "react-scripts eject",
+    "prettier": "prettier . --write",
+    "prepare": "husky install"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  },
+  "browserslist": {
+    "production": [">0.2%", "not dead", "not op_mini all"],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "lint-staged": {
+    "*": "npx prettier --check",
+    "*.{js,jsx,ts,tsx}": "npx eslint"
+  },
+  "msw": {
+    "workerDirectory": "public"
+  }
+}
+```
+
+이렇게까지 설정을 해보았으나,, 밑빠진 독에 물을 붓는 느낌이 들었고, 리프레쉬를 한 후에 다시금 원인을 분석해 보았다.
+
+## 문제 원인 정리
+
+import, jsx는 ECMAscript 문법이고, axios와 nanoid는 ECMAScript 문법을 따르는 모듈이다.
+
+Jest는 Node.js 환경에서 동작하기 때문에 CommonJS 방식으로 모듈을 사용한다.
+
+Jest는 바벨같은 트랜스파일러를 통해 ECMAScript 모듈을 CommonJS 문법에 맞도록 변경 후 사용해야 한다.
+
+**Jest는 node_modules 폴더를 트랜스파일러의 변경 대상에서 제외한다다.**
+
+따라서, node_modules 중에서 nanoid, axios를 변경 대상에서 제외하지 않도록 설정해줘야 한다.
+
+## 해결한 방법
+
+그렇다.. 애초에 Jest는 node_modules 하위에 있는 폴더들은 트랜스파일 대상에서 제외하는데, 그걸 제외하지 않도록 설정해주면 되는 것이었다.
+
+```js
+"jest": {
+    "transformIgnorePatterns": [
+      "node_modules\/(?!nanoid|axios)"
+    ]
+  }
+```
+
+이 결론에 도달하는데 최소한 이틀은 밤을 샌 것 같다..
+
+## 이를 통해 문제를 해결할 수 있는 이유
+
+기본적으로 Jest는 node_modules 하위 디렉토리의 코드들은 변경 대상에서 제외한다. transformIgnorePatterns 설정 값을 통해 변경 제외 대상을 지정할 수 있다.
+
+## 배운점
+
+해결하기 까다로운 문제를 마주했을 때, 가장 중요한 것은
+
+**문제의 원인을 정확히 진단하는 것이다.**
+
+문제의 원인을 정확히 진단하지 않고 문제를 해결하려 할 때,
+우연히 해결할 수도 있다.
+
+그러나, 추후에 똑같은 문제가 발생할 확률이 높고, 문제와 관련없는 해결책을 찾아보기 때문에 문제를 해결하는데 시간이 오래 걸릴 수 있다.
