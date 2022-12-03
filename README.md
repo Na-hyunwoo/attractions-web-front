@@ -199,7 +199,7 @@ Jest는 Node.js 환경에서 동작하기 때문에 CommonJS 방식으로 모듈
 
 Jest는 바벨같은 트랜스파일러를 통해 ECMAScript 모듈을 CommonJS 문법에 맞도록 변경 후 사용해야 한다.
 
-**Jest는 node_modules 폴더를 트랜스파일러의 변경 대상에서 제외한다다.**
+**Jest는 node_modules 폴더를 트랜스파일러의 변경 대상에서 제외한다.**
 
 따라서, node_modules 중에서 nanoid, axios를 변경 대상에서 제외하지 않도록 설정해줘야 한다.
 
