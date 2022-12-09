@@ -69,7 +69,7 @@
   - 카드 설명 2줄 이상은 말줌임표 처리
 - 에러 핸들링
 
-##결과물
+## 결과물
 https://user-images.githubusercontent.com/22545843/206652848-03bc3fc7-d6b7-4159-b5eb-dd4eea47ad18.mov
 
 ## 트러블 슈팅
